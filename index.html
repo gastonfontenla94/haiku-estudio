@@ -3,7 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Haiku Estudio</title>
+<title>Haiku Estudio — Grabación, mezcla y mastering en Buenos Aires</title>
+<meta name="description" content="Estudio de audio profesional en Buenos Aires. Grabación, mezcla, mastering y sonido en vivo con criterio musical y rigor técnico.">
+<meta property="og:title" content="Haiku Estudio">
+<meta property="og:description" content="Grabación, mezcla y mastering con criterio. Buenos Aires.">
+<meta property="og:image" content="https://haikuestudio.com/logo.png">
+<meta property="og:url" content="https://haikuestudio.com">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
@@ -370,6 +377,13 @@
     footer { flex-direction: column; gap: 0.75rem; text-align: center; }
     .hero-meta { flex-wrap: wrap; gap: 1.5rem; }
     .nav-links { display: none; }
+    .nav-links.open { display: flex; flex-direction: column; gap: 1.5rem; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg); align-items: center; justify-content: center; z-index: 99; }
+    .nav-links.open a { font-size: 13px; }
+    .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; z-index: 101; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 0.5px; background: var(--ink); transition: transform 0.3s, opacity 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
     body { cursor: auto; }
     .cursor { display: none; }
   }
@@ -400,12 +414,15 @@
     <img src="logo.png" alt="Haiku Estudio">
     <span class="nav-logo-text">Haiku Estudio</span>
   </a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="#servicios">Servicios</a></li>
     <li><a href="#sobre">Estudio</a></li>
     <li><a href="#trabajos">Trabajos</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menú" style="display:none;">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <section id="hero">
@@ -543,7 +560,7 @@
       </div>
     </div>
     <div class="reveal">
-      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <form action="https://formspree.io/f/xvzygapg" method="POST">
         <div class="form-group"><label for="nombre">Nombre</label><input type="text" id="nombre" name="nombre" required></div>
         <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
         <div class="form-group">
@@ -587,6 +604,18 @@
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  if (window.innerWidth <= 768) hamburger.style.display = 'flex';
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    navLinks.classList.remove('open');
+  }));
 
   const cursor = document.getElementById('cursor');
   document.addEventListener('mousemove', e => {
