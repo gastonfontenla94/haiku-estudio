@@ -287,27 +287,13 @@
 
   .services-list-m { display: none; }
 
-  /* PHOTO STRIP */
-  .photo-strip {
-    width: 100%; height: 60vh;
-    position: relative; overflow: hidden;
-    border-top: 0.5px solid var(--faint);
-    border-bottom: 0.5px solid var(--faint);
-  }
-  .photo-strip img {
-    width: 100%; height: 100%;
+  /* TRABAJOS — con foto lateral */
+  .works-inner { display: grid; grid-template-columns: 1fr 220px; gap: 4rem; align-items: start; }
+  .works-photo img {
+    width: 100%; aspect-ratio: 3/4;
     object-fit: cover; object-position: center 45%;
-    filter: grayscale(30%) contrast(1.05) brightness(0.82);
+    filter: grayscale(30%) contrast(1.05) brightness(0.85);
     display: block;
-  }
-  .photo-strip-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(30,37,53,0.35) 0%, transparent 60%);
-  }
-  .photo-strip-label {
-    position: absolute; bottom: 2rem; left: 4rem;
-    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: rgba(242,241,238,0.55);
   }
 
   /* SOBRE */
@@ -389,6 +375,8 @@
     .hero-content { padding: 8rem 1.5rem 4rem; }
     section { padding: 5rem 1.5rem; }
     .circle-stage { display: none; }
+    .works-inner { grid-template-columns: 1fr; }
+    .works-photo { display: none; }
     .services-list-m { display: block; border-top: 0.5px solid var(--faint); }
     .service-m { padding: 1.2rem 0; border-bottom: 0.5px solid var(--faint); display: flex; gap: 1.5rem; align-items: baseline; }
     .service-m-num { font-size: 9px; letter-spacing: 0.12em; color: var(--faint); }
@@ -532,12 +520,6 @@
   </div>
 </section>
 
-<div class="photo-strip reveal">
-  <img src="Foto-CV.jpg" alt="Gastón Fontenla operando sonido en vivo">
-  <div class="photo-strip-overlay"></div>
-  <span class="photo-strip-label">Sonido en vivo</span>
-</div>
-
 <section id="sobre">
   <div class="sobre-grid">
     <div class="reveal">
@@ -554,22 +536,27 @@
 
 <section id="trabajos">
   <p class="section-label reveal">Trabajos recientes</p>
-  <div class="works-list reveal">
-    <div class="work-item">
-      <div class="work-left"><span class="work-tag">Mezcla</span><a href="https://open.spotify.com" target="_blank" class="work-title">Luno — Gastón Fontenla</a></div>
-      <div class="work-right"><span class="work-year">2022</span><span class="work-arrow">→</span></div>
+  <div class="works-inner reveal">
+    <div class="works-list">
+      <div class="work-item">
+        <div class="work-left"><span class="work-tag">Mezcla</span><a href="https://open.spotify.com" target="_blank" class="work-title">Luno — Gastón Fontenla</a></div>
+        <div class="work-right"><span class="work-year">2022</span><span class="work-arrow">→</span></div>
+      </div>
+      <div class="work-item">
+        <div class="work-left"><span class="work-tag">Sonido en vivo</span><span class="work-title">Cumbre Mercosur — Palacio San Martín</span></div>
+        <div class="work-right"><span class="work-year">2025</span><span class="work-arrow">→</span></div>
+      </div>
+      <div class="work-item">
+        <div class="work-left"><span class="work-tag">Sonido en vivo</span><span class="work-title">Expo Ganadera — La Rural</span></div>
+        <div class="work-right"><span class="work-year">2025</span><span class="work-arrow">→</span></div>
+      </div>
+      <div class="work-item">
+        <div class="work-left"><span class="work-tag">Sonido en vivo</span><span class="work-title">Expo EFI — C.E.C. Buenos Aires</span></div>
+        <div class="work-right"><span class="work-year">2025</span><span class="work-arrow">→</span></div>
+      </div>
     </div>
-    <div class="work-item">
-      <div class="work-left"><span class="work-tag">Sonido en vivo</span><span class="work-title">Cumbre Mercosur — Palacio San Martín</span></div>
-      <div class="work-right"><span class="work-year">2025</span><span class="work-arrow">→</span></div>
-    </div>
-    <div class="work-item">
-      <div class="work-left"><span class="work-tag">Sonido en vivo</span><span class="work-title">Expo Ganadera — La Rural</span></div>
-      <div class="work-right"><span class="work-year">2025</span><span class="work-arrow">→</span></div>
-    </div>
-    <div class="work-item">
-      <div class="work-left"><span class="work-tag">Sonido en vivo</span><span class="work-title">Expo EFI — C.E.C. Buenos Aires</span></div>
-      <div class="work-right"><span class="work-year">2025</span><span class="work-arrow">→</span></div>
+    <div class="works-photo">
+      <img src="Foto-CV.jpg" alt="Gastón Fontenla — Sonido en vivo">
     </div>
   </div>
   <p style="font-size: 11px; color: var(--faint); margin-top: 2rem; font-style: italic; letter-spacing: 0.02em;">Trabajos de estudio disponibles bajo consulta.</p>
