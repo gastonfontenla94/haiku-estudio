@@ -179,21 +179,100 @@
   .section-label::before { content: ''; display: block; width: 24px; height: 0.5px; background: var(--faint); }
 
   /* SERVICIOS */
-  .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 0.5px solid var(--faint); }
-  .service-item {
-    padding: 2.5rem 2rem 2.5rem 0;
-    border-bottom: 0.5px solid var(--faint);
-    border-right: 0.5px solid var(--faint);
-    transition: background 0.3s;
+  .circle-stage {
+    position: relative;
+    width: 560px; height: 560px;
+    margin: 2rem auto 0;
+    overflow: visible;
   }
-  .service-item:hover { background: rgba(92, 122, 82, 0.03); }
-  .service-item:nth-child(2n) { border-right: none; }
-  .service-item:last-child { grid-column: span 2; border-right: none; }
+  .circle-svg {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%; overflow: visible;
+  }
+  .inner-ring-g {
+    transform-origin: 280px 280px;
+    animation: ring-spin 50s linear infinite;
+  }
+  @keyframes ring-spin { to { transform: rotate(360deg); } }
+  .svg-connector { transition: opacity 0.4s; }
 
-  .service-num { font-size: 9px; letter-spacing: 0.12em; color: var(--faint); margin-bottom: 1.5rem; transition: color 0.3s; }
-  .service-item:hover .service-num { color: var(--green); }
-  .service-title { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--ink); margin-bottom: 0.75rem; line-height: 1.25; }
-  .service-desc { font-size: 13px; color: var(--mid); line-height: 1.8; }
+  .circle-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140px; height: 90px;
+    pointer-events: none; z-index: 2;
+  }
+  .cc-idle {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 30px;
+    color: var(--faint);
+    transition: opacity 0.4s;
+  }
+  .cc-active {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; opacity: 0;
+    transition: opacity 0.35s;
+  }
+  .circle-stage.hovered .cc-idle { opacity: 0; }
+  .circle-stage.hovered .cc-active { opacity: 1; }
+  .cc-num {
+    display: block; font-size: 9px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--green); margin-bottom: 0.4rem;
+  }
+  .cc-name {
+    display: block; font-family: var(--serif); font-size: 20px;
+    color: var(--ink); line-height: 1.2;
+  }
+  .cc-desc {
+    display: block; font-size: 11px; color: var(--mid);
+    line-height: 1.6; margin-top: 0.4rem;
+  }
+
+  .snode {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy)));
+    cursor: pointer; z-index: 3;
+  }
+  .snode-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--faint); margin: 0 auto;
+    transition: background 0.3s, transform 0.4s;
+  }
+  .snode:hover .snode-dot { background: var(--green); transform: scale(2.4); }
+  .snode-label { position: absolute; }
+  .snode-num {
+    display: block; font-size: 9px; letter-spacing: 0.12em;
+    color: var(--faint); transition: color 0.3s; line-height: 1.5;
+  }
+  .snode-name {
+    display: block; font-family: var(--serif); font-size: 18px; font-weight: 400;
+    color: var(--mid); white-space: nowrap; transition: color 0.3s; line-height: 1.2;
+  }
+  .snode:hover .snode-num { color: var(--green); }
+  .snode:hover .snode-name { color: var(--ink); }
+
+  .snode[data-dir="top"] .snode-label {
+    position: absolute;
+    bottom: calc(100% + 14px); left: 50%;
+    transform: translateX(-50%); text-align: center;
+  }
+  .snode[data-dir="right"] .snode-label {
+    position: absolute;
+    left: calc(100% + 16px); top: 50%;
+    transform: translateY(-50%); text-align: left;
+  }
+  .snode[data-dir="left"] .snode-label {
+    position: absolute;
+    right: calc(100% + 16px); top: 50%;
+    transform: translateY(-50%); text-align: right;
+  }
+
+  .services-list-m { display: none; }
 
   /* SOBRE */
   #sobre { border-top: 0.5px solid var(--faint); border-bottom: 0.5px solid var(--faint); }
@@ -275,9 +354,11 @@
     nav { padding: 1.25rem 1.5rem; }
     .hero-content { padding: 8rem 1.5rem 4rem; }
     section { padding: 5rem 1.5rem; }
-    .services-grid { grid-template-columns: 1fr; }
-    .service-item { border-right: none; padding-right: 0; }
-    .service-item:last-child { grid-column: span 1; }
+    .circle-stage { display: none; }
+    .services-list-m { display: block; border-top: 0.5px solid var(--faint); }
+    .service-m { padding: 1.2rem 0; border-bottom: 0.5px solid var(--faint); display: flex; gap: 1.5rem; align-items: baseline; }
+    .service-m-num { font-size: 9px; letter-spacing: 0.12em; color: var(--faint); }
+    .service-m-name { font-family: var(--serif); font-size: 20px; color: var(--mid); }
     .sobre-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .contacto-inner { grid-template-columns: 1fr; gap: 3rem; }
     footer { flex-direction: column; gap: 0.75rem; text-align: center; }
@@ -343,12 +424,67 @@
 
 <section id="servicios">
   <p class="section-label reveal">Servicios</p>
-  <div class="services-grid">
-    <div class="service-item reveal"><p class="service-num">01</p><h3 class="service-title">Grabación</h3><p class="service-desc">Sesiones de grabación para músicos, voces y proyectos sonoros. Criterio técnico y atención al detalle en cada toma.</p></div>
-    <div class="service-item reveal"><p class="service-num">02</p><h3 class="service-title">Mezcla</h3><p class="service-desc">Mezcla en formato presencial o remoto. Trabajo fino sobre el balance, la dinámica y la espacialidad de cada producción.</p></div>
-    <div class="service-item reveal"><p class="service-num">03</p><h3 class="service-title">Mastering</h3><p class="service-desc">Masterización para plataformas de streaming y vinilo. Trabajo orientado a la claridad, el volumen y la coherencia del resultado final.</p></div>
-    <div class="service-item reveal"><p class="service-num">04</p><h3 class="service-title">Sonido en vivo</h3><p class="service-desc">Operación técnica para eventos corporativos, culturales y conferencias. Experiencia en entornos de alta exigencia.</p></div>
-    <div class="service-item reveal"><p class="service-num">05</p><h3 class="service-title">Producción</h3><p class="service-desc">Acompañamiento en el proceso creativo y productivo de proyectos musicales desde la composición hasta el resultado final.</p></div>
+
+  <div class="circle-stage reveal" id="circleStage">
+    <svg class="circle-svg" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
+      <!-- Anillo exterior -->
+      <circle cx="280" cy="280" r="200" fill="none" stroke="#BFC4C9" stroke-width="0.5"/>
+      <!-- Anillo interior giratorio -->
+      <g class="inner-ring-g">
+        <circle cx="280" cy="280" r="70" fill="none" stroke="#BFC4C9" stroke-width="0.5" opacity="0.5"/>
+        <circle cx="280" cy="210" r="1.5" fill="#BFC4C9" opacity="0.7"/>
+        <circle cx="350" cy="280" r="1.5" fill="#BFC4C9" opacity="0.7"/>
+        <circle cx="280" cy="350" r="1.5" fill="#BFC4C9" opacity="0.7"/>
+        <circle cx="210" cy="280" r="1.5" fill="#BFC4C9" opacity="0.7"/>
+      </g>
+      <!-- Punto central -->
+      <circle cx="280" cy="280" r="2" fill="#BFC4C9"/>
+      <!-- Líneas conector (emergen al hover) -->
+      <line class="svg-connector" x1="280" y1="280" x2="280" y2="80"  stroke="#5C7A52" stroke-width="0.5" opacity="0"/>
+      <line class="svg-connector" x1="280" y1="280" x2="470" y2="218" stroke="#5C7A52" stroke-width="0.5" opacity="0"/>
+      <line class="svg-connector" x1="280" y1="280" x2="398" y2="442" stroke="#5C7A52" stroke-width="0.5" opacity="0"/>
+      <line class="svg-connector" x1="280" y1="280" x2="162" y2="442" stroke="#5C7A52" stroke-width="0.5" opacity="0"/>
+      <line class="svg-connector" x1="280" y1="280" x2="90"  y2="218" stroke="#5C7A52" stroke-width="0.5" opacity="0"/>
+    </svg>
+
+    <div class="circle-center">
+      <div class="cc-idle">五</div>
+      <div class="cc-active">
+        <span class="cc-num" id="ccNum"></span>
+        <span class="cc-name" id="ccName"></span>
+        <span class="cc-desc" id="ccDesc"></span>
+      </div>
+    </div>
+
+    <div class="snode" data-dir="top"   data-num="01" data-name="Grabación"     data-desc="Cada toma, una decisión."     data-idx="0" style="--dx:0px;    --dy:-200px;">
+      <div class="snode-dot"></div>
+      <div class="snode-label"><span class="snode-num">01</span><span class="snode-name">Grabación</span></div>
+    </div>
+    <div class="snode" data-dir="right"  data-num="02" data-name="Mezcla"        data-desc="Balance, dinámica, espacio."   data-idx="1" style="--dx:190px;  --dy:-62px;">
+      <div class="snode-dot"></div>
+      <div class="snode-label"><span class="snode-num">02</span><span class="snode-name">Mezcla</span></div>
+    </div>
+    <div class="snode" data-dir="right"  data-num="03" data-name="Mastering"     data-desc="Claridad y coherencia final."  data-idx="2" style="--dx:118px;  --dy:162px;">
+      <div class="snode-dot"></div>
+      <div class="snode-label"><span class="snode-num">03</span><span class="snode-name">Mastering</span></div>
+    </div>
+    <div class="snode" data-dir="left"   data-num="04" data-name="Sonido en vivo" data-desc="Precisión en tiempo real."    data-idx="3" style="--dx:-118px; --dy:162px;">
+      <div class="snode-dot"></div>
+      <div class="snode-label"><span class="snode-num">04</span><span class="snode-name">Sonido en vivo</span></div>
+    </div>
+    <div class="snode" data-dir="left"   data-num="05" data-name="Producción"    data-desc="Del concepto al resultado."    data-idx="4" style="--dx:-190px; --dy:-62px;">
+      <div class="snode-dot"></div>
+      <div class="snode-label"><span class="snode-num">05</span><span class="snode-name">Producción</span></div>
+    </div>
+  </div>
+
+  <!-- Fallback móvil -->
+  <div class="services-list-m">
+    <div class="service-m"><span class="service-m-num">01</span><span class="service-m-name">Grabación</span></div>
+    <div class="service-m"><span class="service-m-num">02</span><span class="service-m-name">Mezcla</span></div>
+    <div class="service-m"><span class="service-m-num">03</span><span class="service-m-name">Mastering</span></div>
+    <div class="service-m"><span class="service-m-num">04</span><span class="service-m-name">Sonido en vivo</span></div>
+    <div class="service-m"><span class="service-m-num">05</span><span class="service-m-name">Producción</span></div>
   </div>
 </section>
 
@@ -451,9 +587,31 @@
     cursor.style.left = e.clientX + 'px';
     cursor.style.top = e.clientY + 'px';
   });
-  document.querySelectorAll('a, button, .service-item').forEach(el => {
+  document.querySelectorAll('a, button, .snode').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+
+  // Mandala de servicios
+  const circleStage = document.getElementById('circleStage');
+  const ccNum = document.getElementById('ccNum');
+  const ccName = document.getElementById('ccName');
+  const ccDesc = document.getElementById('ccDesc');
+  const connectors = document.querySelectorAll('.svg-connector');
+
+  document.querySelectorAll('.snode').forEach(node => {
+    node.addEventListener('mouseenter', () => {
+      const idx = parseInt(node.dataset.idx);
+      ccNum.textContent = node.dataset.num;
+      ccName.textContent = node.dataset.name;
+      ccDesc.textContent = node.dataset.desc;
+      circleStage.classList.add('hovered');
+      connectors.forEach((c, i) => c.style.opacity = i === idx ? '1' : '0');
+    });
+    node.addEventListener('mouseleave', () => {
+      circleStage.classList.remove('hovered');
+      connectors.forEach(c => c.style.opacity = '0');
+    });
   });
 </script>
 </body>
