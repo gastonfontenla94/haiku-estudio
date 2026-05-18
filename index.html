@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haiku Estudio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F2F1EE;
+    --ink: #1E2535;
+    --mid: #6B7280;
+    --faint: #BFC4C9;
+    --green: #5C7A52;
+    --navy: #1E2535;
+    --serif: 'EB Garamond', Georgia, serif;
+    --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 4rem; background: var(--bg);
+    border-bottom: 0.5px solid transparent; transition: border-color 0.4s;
+  }
+  nav.scrolled { border-bottom-color: var(--faint); }
+
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; object-fit: contain; }
+  .nav-logo-text { font-family: var(--serif); font-size: 16px; color: var(--ink); }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh; position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 10rem 4rem 6rem; border-bottom: 0.5px solid var(--faint);
+  }
+
+  .hero-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
+
+  .hero-title { font-family: var(--serif); font-size: clamp(3rem, 7vw, 6rem); font-weight: 400; line-height: 1.1; color: var(--ink); max-width: 820px; opacity: 0; animation: fadeUp 0.8s 0.4s forwards; }
+  .hero-title em { font-style: italic; color: var(--green); }
+
+  .hero-sub { margin-top: 2.5rem; font-size: 14px; color: var(--mid); max-width: 400px; line-height: 1.85; opacity: 0; animation: fadeUp 0.8s 0.6s forwards; }
+
+  .hero-meta { margin-top: 4rem; display: flex; gap: 3rem; opacity: 0; animation: fadeUp 0.8s 0.8s forwards; }
+  .hero-meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .hero-meta-item span:first-child { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); }
+  .hero-meta-item span:last-child { font-size: 13px; color: var(--mid); }
+
+  .hero-logo {
+    position: absolute; top: 50%; right: 4rem;
+    transform: translateY(-60%); width: 200px;
+    opacity: 0; animation: fadeIn 1.2s 0.8s forwards;
+  }
+
+  /* SECTIONS */
+  section { padding: 8rem 4rem; max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--faint); margin-bottom: 3rem; }
+
+  /* SERVICIOS */
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 0.5px solid var(--faint); }
+  .service-item { padding: 2.5rem 2rem 2.5rem 0; border-bottom: 0.5px solid var(--faint); border-right: 0.5px solid var(--faint); }
+  .service-item:nth-child(3n) { border-right: none; }
+  .service-num { font-size: 10px; letter-spacing: 0.1em; color: var(--faint); margin-bottom: 1.2rem; }
+  .service-title { font-family: var(--serif); font-size: 20px; font-weight: 400; color: var(--ink); margin-bottom: 0.8rem; line-height: 1.3; }
+  .service-desc { font-size: 13px; color: var(--mid); line-height: 1.7; }
+
+  /* SOBRE */
+  #sobre { border-top: 0.5px solid var(--faint); border-bottom: 0.5px solid var(--faint); }
+
+  .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+
+  .sobre-foto {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover;
+    object-position: center top;
+    filter: grayscale(15%) contrast(1.02);
+  }
+
+  .sobre-content { padding-top: 0.5rem; }
+
+  .sobre-content h2 { font-family: var(--serif); font-size: 32px; font-weight: 400; line-height: 1.25; color: var(--ink); margin-bottom: 1.5rem; }
+  .sobre-content h2 em { font-style: italic; color: var(--green); }
+
+  .sobre-content p { font-size: 14px; color: var(--mid); line-height: 1.85; margin-bottom: 1.2rem; }
+  .sobre-content p:last-child { margin-bottom: 0; }
+  .sobre-content strong { color: var(--ink); font-weight: 500; }
+
+  /* TRABAJOS */
+  .works-list { border-top: 0.5px solid var(--faint); }
+  .work-item { display: grid; grid-template-columns: 1fr auto; align-items: baseline; padding: 1.5rem 0; border-bottom: 0.5px solid var(--faint); gap: 2rem; }
+  .work-item:hover .work-title { color: var(--green); }
+  .work-left { display: flex; gap: 2rem; align-items: baseline; }
+  .work-tag { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); min-width: 80px; }
+  .work-title { font-family: var(--serif); font-size: 18px; font-weight: 400; color: var(--mid); transition: color 0.25s; text-decoration: none; }
+  a.work-title:hover { color: var(--green); }
+  a.work-title { text-decoration: none; }
+  .work-year { font-size: 12px; color: var(--faint); }
+
+  /* CONTACTO */
+  #contacto { border-top: 0.5px solid var(--faint); }
+  .contacto-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+
+  .contacto-left h2 { font-family: var(--serif); font-size: 42px; font-weight: 400; line-height: 1.2; color: var(--ink); margin-bottom: 1.5rem; }
+  .contacto-left h2 em { font-style: italic; color: var(--green); }
+  .contacto-left p { font-size: 13px; color: var(--mid); line-height: 1.8; margin-bottom: 2rem; }
+
+  .contacto-links { display: flex; flex-direction: column; gap: 0.6rem; }
+  .contacto-links a { font-size: 13px; color: var(--mid); text-decoration: none; display: flex; align-items: center; gap: 0.75rem; transition: color 0.2s; }
+  .contacto-links a:hover { color: var(--green); }
+  .contacto-links a::before { content: ''; display: inline-block; width: 20px; height: 0.5px; background: var(--faint); transition: background 0.2s, width 0.2s; }
+  .contacto-links a:hover::before { background: var(--green); width: 30px; }
+
+  .form-group { margin-bottom: 1.5rem; }
+  .form-group label { display: block; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); margin-bottom: 0.5rem; }
+  .form-group input, .form-group textarea, .form-group select { width: 100%; background: transparent; border: none; border-bottom: 0.5px solid var(--faint); padding: 0.6rem 0; font-family: var(--sans); font-size: 14px; color: var(--ink); outline: none; transition: border-color 0.2s; -webkit-appearance: none; }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-bottom-color: var(--green); }
+  .form-group textarea { resize: none; height: 80px; }
+  .form-group select { cursor: pointer; color: var(--mid); }
+
+  .btn-submit { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--navy); color: var(--bg); border: none; padding: 0.9rem 2rem; font-family: var(--sans); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; margin-top: 0.5rem; }
+  .btn-submit:hover { background: var(--green); }
+  .btn-submit svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.5; transition: transform 0.2s; }
+  .btn-submit:hover svg { transform: translateX(3px); }
+
+  footer { padding: 2rem 4rem; border-top: 0.5px solid var(--faint); display: flex; justify-content: space-between; align-items: center; }
+  footer span { font-size: 11px; color: var(--faint); letter-spacing: 0.05em; }
+  .footer-logo { width: 28px; height: 28px; object-fit: contain; opacity: 0.35; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.25rem 1.5rem; }
+    #hero { padding: 8rem 1.5rem 4rem; }
+    .hero-logo { display: none; }
+    section { padding: 5rem 1.5rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .service-item { border-right: none; padding-right: 0; }
+    .sobre-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .contacto-inner { grid-template-columns: 1fr; gap: 3rem; }
+    footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    .hero-meta { flex-wrap: wrap; gap: 1.5rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <img src="logo.png" alt="Haiku Estudio">
+    <span class="nav-logo-text">Haiku Estudio</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#sobre">Estudio</a></li>
+    <li><a href="#trabajos">Trabajos</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<section id="hero" style="max-width: 100%; padding-left: 4rem; padding-right: 4rem;">
+  <img src="logo.png" alt="" class="hero-logo" aria-hidden="true">
+  <p class="hero-label">Buenos Aires · Audio profesional</p>
+  <h1 class="hero-title">
+    Grabación, mezcla<br>y mastering<br>con <em>criterio.</em>
+  </h1>
+  <p class="hero-sub">
+    Haiku Estudio es un espacio de trabajo orientado a la calidad sonora, la escucha profunda y el resultado honesto.
+  </p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><span>Ubicación</span><span>CABA, Argentina</span></div>
+    <div class="hero-meta-item"><span>Modalidad</span><span>Presencial y remoto</span></div>
+    <div class="hero-meta-item"><span>Idiomas</span><span>Español · English</span></div>
+  </div>
+</section>
+
+<section id="servicios">
+  <p class="section-label reveal">Servicios</p>
+  <div class="services-grid">
+    <div class="service-item reveal"><p class="service-num">01</p><h3 class="service-title">Grabación</h3><p class="service-desc">Sesiones de grabación para músicos, voces y proyectos sonoros. Criterio técnico y atención al detalle en cada toma.</p></div>
+    <div class="service-item reveal"><p class="service-num">02</p><h3 class="service-title">Mezcla</h3><p class="service-desc">Mezcla en formato presencial o remoto. Trabajo fino sobre el balance, la dinámica y la espacialidad de cada producción.</p></div>
+    <div class="service-item reveal"><p class="service-num">03</p><h3 class="service-title">Mastering</h3><p class="service-desc">Masterización para plataformas de streaming y vinilo. Trabajo orientado a la claridad, el volumen y la coherencia del resultado final.</p></div>
+    <div class="service-item reveal"><p class="service-num">04</p><h3 class="service-title">Sonido en vivo</h3><p class="service-desc">Operación técnica para eventos corporativos, culturales y conferencias. Experiencia en entornos de alta exigencia.</p></div>
+    <div class="service-item reveal"><p class="service-num">05</p><h3 class="service-title">Producción</h3><p class="service-desc">Acompañamiento en el proceso creativo y productivo de proyectos musicales desde la composición hasta el resultado final.</p></div>
+  </div>
+</section>
+
+<section id="sobre">
+  <div class="sobre-grid">
+    <div class="reveal">
+      <img src="gaston.jpg" alt="Gastón Fontenla en Haiku Estudio" class="sobre-foto">
+    </div>
+    <div class="sobre-content reveal">
+      <h2>Un estudio construido<br>desde la <em>escucha.</em></h2>
+      <p>Haiku Estudio nació de una convicción: el buen sonido no es el más llamativo, sino el más honesto. El que sirve a la música, no el que la impone.</p>
+      <p><strong>Gastón Fontenla</strong> es Licenciado en Composición Musical por la Universidad Nacional de Villa María y técnico de audio con formación en mezcla, mastering y grabación. Viene de una familia de músicos —su abuelo Jorge Fontenla fue uno de los compositores y directores de orquesta más importantes de la Argentina— y ese legado moldea una mirada sobre el audio que combina rigor técnico con profundidad musical.</p>
+      <p>El estudio opera desde CABA con una filosofía de trabajo simple: escuchar bien antes de intervenir. Cada proyecto es tratado con el tiempo y el criterio que merece.</p>
+    </div>
+  </div>
+</section>
+
+<section id="trabajos">
+  <p class="section-label reveal">Trabajos recientes</p>
+  <div class="works-list reveal">
+    <div class="work-item"><div class="work-left"><span class="work-tag">Mezcla</span><a href="https://open.spotify.com" target="_blank" class="work-title">Luno — Gastón Fontenla</a></div><span class="work-year">2022</span></div>
+    <div class="work-item"><div class="work-left"><span class="work-tag">Sonido en vivo</span><span class="work-title">Cumbre Mercosur — Palacio San Martín</span></div><span class="work-year">2025</span></div>
+    <div class="work-item"><div class="work-left"><span class="work-tag">Sonido en vivo</span><span class="work-title">Expo Ganadera — La Rural</span></div><span class="work-year">2025</span></div>
+    <div class="work-item"><div class="work-left"><span class="work-tag">Sonido en vivo</span><span class="work-title">Expo EFI — C.E.C. Buenos Aires</span></div><span class="work-year">2025</span></div>
+  </div>
+  <p style="font-size: 12px; color: var(--faint); margin-top: 1.5rem; font-style: italic;">Trabajos de estudio disponibles bajo consulta.</p>
+</section>
+
+<section id="contacto">
+  <div class="contacto-inner">
+    <div class="contacto-left reveal">
+      <h2>Hablemos<br>de tu<br><em>proyecto.</em></h2>
+      <p>Para consultas sobre servicios, disponibilidad o presupuestos.</p>
+      <div class="contacto-links">
+        <a href="mailto:gastonfontenla94@gmail.com">gastonfontenla94@gmail.com</a>
+        <a href="tel:+5493534016218">+54 9 353 401-6218</a>
+        <a href="https://instagram.com" target="_blank">Instagram</a>
+      </div>
+    </div>
+    <div class="reveal">
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-group"><label for="nombre">Nombre</label><input type="text" id="nombre" name="nombre" required></div>
+        <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+        <div class="form-group">
+          <label for="servicio">Servicio</label>
+          <select id="servicio" name="servicio">
+            <option value="" disabled selected>Seleccioná un servicio</option>
+            <option>Grabación</option><option>Mezcla</option><option>Mastering</option>
+            <option>Sonido en vivo</option><option>Alquiler de sala</option>
+            <option>Producción</option><option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group"><label for="mensaje">Mensaje</label><textarea id="mensaje" name="mensaje" placeholder="Contame sobre tu proyecto..."></textarea></div>
+        <button type="submit" class="btn-submit">Enviar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Haiku Estudio · Buenos Aires</span>
+  <img src="logo.png" alt="" class="footer-logo" aria-hidden="true">
+  <span>© 2025</span>
+</footer>
+
+<script>
+  document.getElementById('navbar') && window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
