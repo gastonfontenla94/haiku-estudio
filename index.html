@@ -194,7 +194,13 @@
     animation: ring-spin 50s linear infinite;
   }
   @keyframes ring-spin { to { transform: rotate(360deg); } }
-  .svg-connector { transition: opacity 0.4s; }
+  .arc-seg {
+    fill: none; stroke: #5C7A52; stroke-width: 12;
+    stroke-linecap: round;
+    opacity: 0.13; filter: blur(5px);
+    transition: opacity 0.55s, filter 0.55s, stroke-width 0.55s;
+  }
+  .arc-seg.active { opacity: 0.82; filter: blur(0px); stroke-width: 4; }
 
   .circle-center {
     position: absolute;
@@ -427,8 +433,14 @@
 
   <div class="circle-stage reveal" id="circleStage">
     <svg class="circle-svg" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
-      <!-- Anillo exterior -->
-      <circle cx="280" cy="280" r="200" fill="none" stroke="#BFC4C9" stroke-width="0.5"/>
+      <!-- Guía estructural (muy sutil) -->
+      <circle cx="280" cy="280" r="200" fill="none" stroke="#BFC4C9" stroke-width="0.5" opacity="0.25"/>
+      <!-- Cinco arcos: nubosos por defecto, vívidos al hover -->
+      <path class="arc-seg" d="M 162 118 A 200 200 0 0 1 398 118"/>
+      <path class="arc-seg" d="M 398 118 A 200 200 0 0 1 470 342"/>
+      <path class="arc-seg" d="M 470 342 A 200 200 0 0 1 280 480"/>
+      <path class="arc-seg" d="M 280 480 A 200 200 0 0 1 90 342"/>
+      <path class="arc-seg" d="M 90 342 A 200 200 0 0 1 162 118"/>
       <!-- Anillo interior giratorio -->
       <g class="inner-ring-g">
         <circle cx="280" cy="280" r="70" fill="none" stroke="#BFC4C9" stroke-width="0.5" opacity="0.5"/>
@@ -439,12 +451,6 @@
       </g>
       <!-- Punto central -->
       <circle cx="280" cy="280" r="2" fill="#BFC4C9"/>
-      <!-- Líneas conector (emergen al hover) -->
-      <line class="svg-connector" x1="280" y1="280" x2="280" y2="80"  stroke="#5C7A52" stroke-width="0.5" opacity="0"/>
-      <line class="svg-connector" x1="280" y1="280" x2="470" y2="218" stroke="#5C7A52" stroke-width="0.5" opacity="0"/>
-      <line class="svg-connector" x1="280" y1="280" x2="398" y2="442" stroke="#5C7A52" stroke-width="0.5" opacity="0"/>
-      <line class="svg-connector" x1="280" y1="280" x2="162" y2="442" stroke="#5C7A52" stroke-width="0.5" opacity="0"/>
-      <line class="svg-connector" x1="280" y1="280" x2="90"  y2="218" stroke="#5C7A52" stroke-width="0.5" opacity="0"/>
     </svg>
 
     <div class="circle-center">
@@ -597,7 +603,7 @@
   const ccNum = document.getElementById('ccNum');
   const ccName = document.getElementById('ccName');
   const ccDesc = document.getElementById('ccDesc');
-  const connectors = document.querySelectorAll('.svg-connector');
+  const arcs = document.querySelectorAll('.arc-seg');
 
   document.querySelectorAll('.snode').forEach(node => {
     node.addEventListener('mouseenter', () => {
@@ -606,11 +612,11 @@
       ccName.textContent = node.dataset.name;
       ccDesc.textContent = node.dataset.desc;
       circleStage.classList.add('hovered');
-      connectors.forEach((c, i) => c.style.opacity = i === idx ? '1' : '0');
+      arcs.forEach((a, i) => a.classList.toggle('active', i === idx));
     });
     node.addEventListener('mouseleave', () => {
       circleStage.classList.remove('hovered');
-      connectors.forEach(c => c.style.opacity = '0');
+      arcs.forEach(a => a.classList.remove('active'));
     });
   });
 </script>
