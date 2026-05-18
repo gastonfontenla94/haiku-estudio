@@ -287,6 +287,29 @@
 
   .services-list-m { display: none; }
 
+  /* PHOTO STRIP */
+  .photo-strip {
+    width: 100%; height: 60vh;
+    position: relative; overflow: hidden;
+    border-top: 0.5px solid var(--faint);
+    border-bottom: 0.5px solid var(--faint);
+  }
+  .photo-strip img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center 25%;
+    filter: grayscale(30%) contrast(1.05) brightness(0.82);
+    display: block;
+  }
+  .photo-strip-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(30,37,53,0.35) 0%, transparent 60%);
+  }
+  .photo-strip-label {
+    position: absolute; bottom: 2rem; left: 4rem;
+    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(242,241,238,0.55);
+  }
+
   /* SOBRE */
   #sobre { border-top: 0.5px solid var(--faint); border-bottom: 0.5px solid var(--faint); }
   .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
@@ -508,6 +531,12 @@
     <div class="service-m"><span class="service-m-num">05</span><span class="service-m-name">Producción</span></div>
   </div>
 </section>
+
+<div class="photo-strip reveal">
+  <img src="Foto-CV.jpg" alt="Gastón Fontenla operando sonido en vivo">
+  <div class="photo-strip-overlay"></div>
+  <span class="photo-strip-label">Sonido en vivo</span>
+</div>
 
 <section id="sobre">
   <div class="sobre-grid">
