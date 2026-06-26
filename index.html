@@ -220,10 +220,11 @@
   .cc-idle {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
-    font-family: var(--serif); font-size: 30px;
-    color: var(--faint);
     transition: opacity 0.4s;
   }
+  .cc-idle svg { width: 52px; height: 52px; }
+  .cc-vinyl-spin { transform-origin: 24px 24px; animation: ring-spin 14s linear infinite; }
+  .circle-stage.hovered .cc-vinyl-spin { animation-play-state: paused; }
   .cc-active {
     position: absolute; inset: 0;
     display: flex; flex-direction: column;
@@ -503,7 +504,42 @@
     </svg>
 
     <div class="circle-center">
-      <div class="cc-idle">五</div>
+      <div class="cc-idle">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="vinylBody" cx="38%" cy="33%" r="74%">
+              <stop offset="0%" stop-color="#3C496A"/>
+              <stop offset="46%" stop-color="#232C42"/>
+              <stop offset="100%" stop-color="#111726"/>
+            </radialGradient>
+            <radialGradient id="vinylLabel" cx="40%" cy="36%" r="72%">
+              <stop offset="0%" stop-color="#6E8A63"/>
+              <stop offset="100%" stop-color="#4C6644"/>
+            </radialGradient>
+          </defs>
+          <!-- cuerpo del disco -->
+          <circle cx="24" cy="24" r="22" fill="url(#vinylBody)"/>
+          <circle cx="24" cy="24" r="22" fill="none" stroke="#4A5A80" stroke-width="0.5" opacity="0.55"/>
+          <!-- surcos (giran) -->
+          <g class="cc-vinyl-spin">
+            <g fill="none" stroke="#5E6E93" stroke-width="0.35" opacity="0.5">
+              <circle cx="24" cy="24" r="19"/>
+              <circle cx="24" cy="24" r="17.2"/>
+              <circle cx="24" cy="24" r="15.4"/>
+              <circle cx="24" cy="24" r="13.6"/>
+              <circle cx="24" cy="24" r="11.8"/>
+              <circle cx="24" cy="24" r="10"/>
+            </g>
+            <circle cx="24" cy="10.5" r="0.7" fill="#93A2C6" opacity="0.55"/>
+          </g>
+          <!-- reflejo fijo -->
+          <path d="M10 15 A 21 21 0 0 1 30 7.5" fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.07" stroke-linecap="round"/>
+          <!-- etiqueta central -->
+          <circle cx="24" cy="24" r="6.6" fill="url(#vinylLabel)"/>
+          <circle cx="24" cy="24" r="6.6" fill="none" stroke="#F2F1EE" stroke-width="0.4" opacity="0.45"/>
+          <circle cx="24" cy="24" r="1.3" fill="#111726"/>
+        </svg>
+      </div>
       <div class="cc-active">
         <span class="cc-num" id="ccNum"></span>
         <span class="cc-name" id="ccName"></span>
