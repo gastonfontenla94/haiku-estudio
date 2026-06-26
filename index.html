@@ -203,12 +203,12 @@
   }
   @keyframes ring-spin { to { transform: rotate(360deg); } }
   .arc-seg {
-    fill: none; stroke: #5C7A52; stroke-width: 12;
+    fill: none; stroke: #5C7A52; stroke-width: 5;
     stroke-linecap: round;
-    opacity: 0.13; filter: blur(5px);
-    transition: opacity 0.55s, filter 0.55s, stroke-width 0.55s;
+    opacity: 0.2;
+    transition: opacity 0.5s, stroke-width 0.5s;
   }
-  .arc-seg.active { opacity: 0.82; filter: blur(0px); stroke-width: 4; }
+  .arc-seg.active { opacity: 0.95; stroke-width: 8; }
 
   .circle-center {
     position: absolute;
@@ -252,13 +252,31 @@
     transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy)));
     cursor: pointer; z-index: 3;
   }
-  .snode-dot {
-    width: 5px; height: 5px; border-radius: 50%;
-    background: var(--faint); margin: 0 auto;
-    transition: background 0.3s, transform 0.4s;
+  .snode-icon {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--faint);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 12px rgba(30, 37, 53, 0.05);
+    transition: border-color 0.35s, background 0.35s, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s;
   }
-  .snode:hover .snode-dot { background: var(--green); transform: scale(2.4); }
-  .snode-label { position: absolute; }
+  .snode-icon svg {
+    width: 25px; height: 25px;
+    stroke: var(--mid); fill: none; stroke-width: 1.5;
+    stroke-linecap: round; stroke-linejoin: round;
+    transition: stroke 0.35s;
+  }
+  .snode:hover .snode-icon {
+    border-color: var(--green); background: #FFFFFF;
+    transform: scale(1.1);
+    box-shadow: 0 8px 24px rgba(92, 122, 82, 0.22);
+  }
+  .snode:hover .snode-icon svg { stroke: var(--green); }
+  .snode-label {
+    position: absolute;
+    top: calc(100% + 12px); left: 50%;
+    transform: translateX(-50%); text-align: center;
+  }
   .snode-num {
     display: block; font-size: 9px; letter-spacing: 0.12em;
     color: var(--faint); transition: color 0.3s; line-height: 1.5;
@@ -269,22 +287,6 @@
   }
   .snode:hover .snode-num { color: var(--green); }
   .snode:hover .snode-name { color: var(--ink); }
-
-  .snode[data-dir="top"] .snode-label {
-    position: absolute;
-    bottom: calc(100% + 14px); left: 50%;
-    transform: translateX(-50%); text-align: center;
-  }
-  .snode[data-dir="right"] .snode-label {
-    position: absolute;
-    left: calc(100% + 16px); top: 50%;
-    transform: translateY(-50%); text-align: left;
-  }
-  .snode[data-dir="left"] .snode-label {
-    position: absolute;
-    right: calc(100% + 16px); top: 50%;
-    transform: translateY(-50%); text-align: right;
-  }
 
   .services-list-m { display: none; }
 
@@ -389,7 +391,8 @@
     .work-cover-info { opacity: 1; }
     .wc-title { font-size: 15px; }
     .services-list-m { display: block; border-top: 0.5px solid var(--faint); }
-    .service-m { padding: 1.2rem 0; border-bottom: 0.5px solid var(--faint); display: flex; gap: 1.5rem; align-items: baseline; }
+    .service-m { padding: 1.2rem 0; border-bottom: 0.5px solid var(--faint); display: flex; gap: 1.2rem; align-items: center; }
+    .service-m svg { width: 24px; height: 24px; stroke: var(--green); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
     .service-m-num { font-size: 9px; letter-spacing: 0.12em; color: var(--faint); }
     .service-m-name { font-family: var(--serif); font-size: 20px; color: var(--mid); }
     .sobre-grid { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -470,9 +473,17 @@
 
   <div class="circle-stage reveal" id="circleStage">
     <svg class="circle-svg" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
-      <!-- Guía estructural (muy sutil) -->
-      <circle cx="280" cy="280" r="200" fill="none" stroke="#BFC4C9" stroke-width="0.5" opacity="0.25"/>
-      <!-- Cinco arcos: nubosos por defecto, vívidos al hover -->
+      <!-- Radios estructurales (efecto rueda) -->
+      <g stroke="#BFC4C9" stroke-width="0.75" opacity="0.32">
+        <line x1="280" y1="202" x2="280" y2="110"/>
+        <line x1="354.2" y1="255.9" x2="441.7" y2="227.5"/>
+        <line x1="325.9" y1="343.1" x2="379.9" y2="417.5"/>
+        <line x1="234.1" y1="343.1" x2="180.1" y2="417.5"/>
+        <line x1="209.6" y1="255.9" x2="118.3" y2="227.5"/>
+      </g>
+      <!-- Anillo estructural sólido -->
+      <circle cx="280" cy="280" r="200" fill="none" stroke="#BFC4C9" stroke-width="1.25" opacity="0.5"/>
+      <!-- Cinco arcos: definidos, se encienden al hover -->
       <path class="arc-seg" d="M 162 118 A 200 200 0 0 1 398 118"/>
       <path class="arc-seg" d="M 398 118 A 200 200 0 0 1 470 342"/>
       <path class="arc-seg" d="M 470 342 A 200 200 0 0 1 280 480"/>
@@ -480,14 +491,15 @@
       <path class="arc-seg" d="M 90 342 A 200 200 0 0 1 162 118"/>
       <!-- Anillo interior giratorio -->
       <g class="inner-ring-g">
-        <circle cx="280" cy="280" r="70" fill="none" stroke="#BFC4C9" stroke-width="0.5" opacity="0.5"/>
-        <circle cx="280" cy="210" r="1.5" fill="#BFC4C9" opacity="0.7"/>
-        <circle cx="350" cy="280" r="1.5" fill="#BFC4C9" opacity="0.7"/>
-        <circle cx="280" cy="350" r="1.5" fill="#BFC4C9" opacity="0.7"/>
-        <circle cx="210" cy="280" r="1.5" fill="#BFC4C9" opacity="0.7"/>
+        <circle cx="280" cy="280" r="74" fill="none" stroke="#BFC4C9" stroke-width="0.75" opacity="0.6"/>
+        <circle cx="280" cy="206" r="2.2" fill="#5C7A52" opacity="0.6"/>
+        <circle cx="354" cy="280" r="2" fill="#BFC4C9" opacity="0.7"/>
+        <circle cx="280" cy="354" r="2" fill="#BFC4C9" opacity="0.7"/>
+        <circle cx="206" cy="280" r="2" fill="#BFC4C9" opacity="0.7"/>
       </g>
-      <!-- Punto central -->
-      <circle cx="280" cy="280" r="2" fill="#BFC4C9"/>
+      <!-- Núcleo -->
+      <circle cx="280" cy="280" r="5" fill="none" stroke="#BFC4C9" stroke-width="1" opacity="0.6"/>
+      <circle cx="280" cy="280" r="2.5" fill="#5C7A52" opacity="0.5"/>
     </svg>
 
     <div class="circle-center">
@@ -499,35 +511,60 @@
       </div>
     </div>
 
-    <div class="snode" data-dir="top"   data-num="01" data-name="Grabación"     data-desc="Cada toma, una decisión."     data-idx="0" style="--dx:0px;    --dy:-200px;">
-      <div class="snode-dot"></div>
+    <div class="snode" data-num="01" data-name="Grabación" data-desc="Cada toma, una decisión." data-idx="0" style="--dx:0px; --dy:-200px;">
+      <div class="snode-icon">
+        <svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
+      </div>
       <div class="snode-label"><span class="snode-num">01</span><span class="snode-name">Grabación</span></div>
     </div>
-    <div class="snode" data-dir="right"  data-num="02" data-name="Mezcla"        data-desc="Balance, dinámica, espacio."   data-idx="1" style="--dx:190px;  --dy:-62px;">
-      <div class="snode-dot"></div>
+    <div class="snode" data-num="02" data-name="Mezcla" data-desc="Balance, dinámica, espacio." data-idx="1" style="--dx:190px; --dy:-62px;">
+      <div class="snode-icon">
+        <svg viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="21"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="18" y1="3" x2="18" y2="21"/><rect x="4" y="6" width="4" height="3.2" rx="1"/><rect x="10" y="13" width="4" height="3.2" rx="1"/><rect x="16" y="9" width="4" height="3.2" rx="1"/></svg>
+      </div>
       <div class="snode-label"><span class="snode-num">02</span><span class="snode-name">Mezcla</span></div>
     </div>
-    <div class="snode" data-dir="right"  data-num="03" data-name="Mastering"     data-desc="Claridad y coherencia final."  data-idx="2" style="--dx:118px;  --dy:162px;">
-      <div class="snode-dot"></div>
+    <div class="snode" data-num="03" data-name="Mastering" data-desc="Claridad y coherencia final." data-idx="2" style="--dx:118px; --dy:162px;">
+      <div class="snode-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 15a8 8 0 0 1 16 0"/><line x1="12" y1="15" x2="16.5" y2="10.5"/><circle cx="12" cy="15" r="1.2"/><line x1="4" y1="19" x2="20" y2="19"/></svg>
+      </div>
       <div class="snode-label"><span class="snode-num">03</span><span class="snode-name">Mastering</span></div>
     </div>
-    <div class="snode" data-dir="left"   data-num="04" data-name="Sonido en vivo" data-desc="Precisión en tiempo real."    data-idx="3" style="--dx:-118px; --dy:162px;">
-      <div class="snode-dot"></div>
+    <div class="snode" data-num="04" data-name="Sonido en vivo" data-desc="Precisión en tiempo real." data-idx="3" style="--dx:-118px; --dy:162px;">
+      <div class="snode-icon">
+        <svg viewBox="0 0 24 24"><path d="M11 5 6 9.5H3v5h3l5 4.5Z"/><path d="M15.5 9a4.5 4.5 0 0 1 0 6"/><path d="M18.5 6.5a8 8 0 0 1 0 11"/></svg>
+      </div>
       <div class="snode-label"><span class="snode-num">04</span><span class="snode-name">Sonido en vivo</span></div>
     </div>
-    <div class="snode" data-dir="left"   data-num="05" data-name="Producción"    data-desc="Del concepto al resultado."    data-idx="4" style="--dx:-190px; --dy:-62px;">
-      <div class="snode-dot"></div>
+    <div class="snode" data-num="05" data-name="Producción" data-desc="Del concepto al resultado." data-idx="4" style="--dx:-190px; --dy:-62px;">
+      <div class="snode-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="14" width="4.5" height="6" rx="1.6"/><rect x="17" y="14" width="4.5" height="6" rx="1.6"/></svg>
+      </div>
       <div class="snode-label"><span class="snode-num">05</span><span class="snode-name">Producción</span></div>
     </div>
   </div>
 
   <!-- Fallback móvil -->
   <div class="services-list-m">
-    <div class="service-m"><span class="service-m-num">01</span><span class="service-m-name">Grabación</span></div>
-    <div class="service-m"><span class="service-m-num">02</span><span class="service-m-name">Mezcla</span></div>
-    <div class="service-m"><span class="service-m-num">03</span><span class="service-m-name">Mastering</span></div>
-    <div class="service-m"><span class="service-m-num">04</span><span class="service-m-name">Sonido en vivo</span></div>
-    <div class="service-m"><span class="service-m-num">05</span><span class="service-m-name">Producción</span></div>
+    <div class="service-m">
+      <svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
+      <span class="service-m-num">01</span><span class="service-m-name">Grabación</span>
+    </div>
+    <div class="service-m">
+      <svg viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="21"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="18" y1="3" x2="18" y2="21"/><rect x="4" y="6" width="4" height="3.2" rx="1"/><rect x="10" y="13" width="4" height="3.2" rx="1"/><rect x="16" y="9" width="4" height="3.2" rx="1"/></svg>
+      <span class="service-m-num">02</span><span class="service-m-name">Mezcla</span>
+    </div>
+    <div class="service-m">
+      <svg viewBox="0 0 24 24"><path d="M4 15a8 8 0 0 1 16 0"/><line x1="12" y1="15" x2="16.5" y2="10.5"/><circle cx="12" cy="15" r="1.2"/><line x1="4" y1="19" x2="20" y2="19"/></svg>
+      <span class="service-m-num">03</span><span class="service-m-name">Mastering</span>
+    </div>
+    <div class="service-m">
+      <svg viewBox="0 0 24 24"><path d="M11 5 6 9.5H3v5h3l5 4.5Z"/><path d="M15.5 9a4.5 4.5 0 0 1 0 6"/><path d="M18.5 6.5a8 8 0 0 1 0 11"/></svg>
+      <span class="service-m-num">04</span><span class="service-m-name">Sonido en vivo</span>
+    </div>
+    <div class="service-m">
+      <svg viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="14" width="4.5" height="6" rx="1.6"/><rect x="17" y="14" width="4.5" height="6" rx="1.6"/></svg>
+      <span class="service-m-num">05</span><span class="service-m-name">Producción</span>
+    </div>
   </div>
 </section>
 
