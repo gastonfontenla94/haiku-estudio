@@ -287,13 +287,45 @@
 
   .services-list-m { display: none; }
 
-  /* TRABAJOS — con foto lateral */
-  .works-inner { display: grid; grid-template-columns: 1fr 220px; gap: 4rem; align-items: start; }
-  .works-photo img {
-    width: 100%; aspect-ratio: 3/4;
-    object-fit: cover; object-position: center 45%;
-    filter: grayscale(30%) contrast(1.05) brightness(0.85);
-    display: block;
+  /* TRABAJOS — grilla de discografía */
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  .work-cover {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--navy);
+  }
+  .work-cover img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    filter: grayscale(22%) contrast(1.03);
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s;
+  }
+  .work-cover:hover img { transform: scale(1.05); filter: grayscale(0%) contrast(1.05); }
+  .work-cover-info {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 1.1rem 1.2rem;
+    background: linear-gradient(to top, rgba(30,37,53,0.94) 0%, rgba(30,37,53,0.5) 38%, rgba(30,37,53,0) 72%);
+    opacity: 0; transition: opacity 0.45s;
+  }
+  .work-cover:hover .work-cover-info { opacity: 1; }
+  .wc-role {
+    font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #9CB78F; margin-bottom: 0.5rem;
+  }
+  .wc-title {
+    font-family: var(--serif); font-size: 18px; line-height: 1.15;
+    color: #F4F3F0;
+  }
+  .wc-artist { font-size: 11px; color: rgba(244,243,240,0.68); margin-top: 0.2rem; }
+  .works-note {
+    font-size: 11px; color: var(--faint); margin-top: 2.5rem;
+    font-style: italic; letter-spacing: 0.02em;
   }
 
   /* SOBRE */
@@ -306,30 +338,6 @@
   .sobre-content p { font-size: 13.5px; color: var(--mid); line-height: 1.9; margin-bottom: 1.2rem; }
   .sobre-content p:last-child { margin-bottom: 0; }
   .sobre-content strong { color: var(--ink); font-weight: 500; }
-
-  /* TRABAJOS */
-  .works-list { border-top: 0.5px solid var(--faint); }
-  .work-item {
-    display: grid; grid-template-columns: 1fr auto;
-    align-items: center; padding: 1.4rem 0;
-    border-bottom: 0.5px solid var(--faint);
-    gap: 2rem;
-    transition: padding-left 0.3s;
-  }
-  .work-item:hover { padding-left: 0.5rem; }
-  .work-left { display: flex; gap: 2.5rem; align-items: baseline; }
-  .work-tag { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); min-width: 90px; }
-  .work-title { font-family: var(--serif); font-size: 19px; font-weight: 400; color: var(--mid); transition: color 0.25s; text-decoration: none; }
-  .work-item:hover .work-title { color: var(--ink); }
-  a.work-title { text-decoration: none; }
-  .work-right { display: flex; align-items: center; gap: 1.5rem; }
-  .work-year { font-size: 11px; color: var(--faint); letter-spacing: 0.05em; }
-  .work-arrow {
-    font-size: 12px; color: var(--faint);
-    opacity: 0; transform: translateX(-6px);
-    transition: opacity 0.25s, transform 0.25s, color 0.25s;
-  }
-  .work-item:hover .work-arrow { opacity: 1; transform: translateX(0); color: var(--green); }
 
   /* CONTACTO */
   #contacto { border-top: 0.5px solid var(--faint); }
@@ -368,6 +376,7 @@
     #hero { grid-template-columns: 1fr; }
     .hero-photo { display: none; }
     .hero-content { border-right: none; }
+    .works-grid { grid-template-columns: repeat(3, 1fr); }
   }
 
   @media (max-width: 768px) {
@@ -375,8 +384,9 @@
     .hero-content { padding: 8rem 1.5rem 4rem; }
     section { padding: 5rem 1.5rem; }
     .circle-stage { display: none; }
-    .works-inner { grid-template-columns: 1fr; }
-    .works-photo { display: none; }
+    .works-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .work-cover-info { opacity: 1; }
+    .wc-title { font-size: 15px; }
     .services-list-m { display: block; border-top: 0.5px solid var(--faint); }
     .service-m { padding: 1.2rem 0; border-bottom: 0.5px solid var(--faint); display: flex; gap: 1.5rem; align-items: baseline; }
     .service-m-num { font-size: 9px; letter-spacing: 0.12em; color: var(--faint); }
@@ -535,31 +545,58 @@
 </section>
 
 <section id="trabajos">
-  <p class="section-label reveal">Trabajos recientes</p>
-  <div class="works-inner reveal">
-    <div class="works-list">
-      <div class="work-item">
-        <div class="work-left"><span class="work-tag">Mezcla</span><a href="https://open.spotify.com" target="_blank" class="work-title">Luno — Gastón Fontenla</a></div>
-        <div class="work-right"><span class="work-year">2022</span><span class="work-arrow">→</span></div>
-      </div>
-      <div class="work-item">
-        <div class="work-left"><span class="work-tag">Sonido en vivo</span><span class="work-title">Cumbre Mercosur — Palacio San Martín</span></div>
-        <div class="work-right"><span class="work-year">2025</span><span class="work-arrow">→</span></div>
-      </div>
-      <div class="work-item">
-        <div class="work-left"><span class="work-tag">Sonido en vivo</span><span class="work-title">Expo Ganadera — La Rural</span></div>
-        <div class="work-right"><span class="work-year">2025</span><span class="work-arrow">→</span></div>
-      </div>
-      <div class="work-item">
-        <div class="work-left"><span class="work-tag">Sonido en vivo</span><span class="work-title">Expo EFI — C.E.C. Buenos Aires</span></div>
-        <div class="work-right"><span class="work-year">2025</span><span class="work-arrow">→</span></div>
-      </div>
+  <p class="section-label reveal">Trabajos · Discografía</p>
+  <div class="works-grid reveal">
+    <div class="work-cover">
+      <img src="trabajos/constelacion.jpg" alt="Constelación — Gastón Fontenla" loading="lazy">
+      <div class="work-cover-info"><span class="wc-role">Producción y composición</span><span class="wc-title">Constelación</span><span class="wc-artist">Gastón Fontenla</span></div>
     </div>
-    <div class="works-photo">
-      <img src="Foto-CV.jpg" alt="Gastón Fontenla — Sonido en vivo">
+    <div class="work-cover">
+      <img src="trabajos/oceano-infinito.jpg" alt="Océano Infinito — Matías Pérez y Gastón Fontenla" loading="lazy">
+      <div class="work-cover-info"><span class="wc-role">Producción y composición</span><span class="wc-title">Océano Infinito</span><span class="wc-artist">Matías Pérez · Gastón Fontenla</span></div>
+    </div>
+    <div class="work-cover">
+      <img src="trabajos/luno.jpg" alt="Luno — Gastón Fontenla" loading="lazy">
+      <div class="work-cover-info"><span class="wc-role">Producción y composición</span><span class="wc-title">Luno</span><span class="wc-artist">Gastón Fontenla</span></div>
+    </div>
+    <div class="work-cover">
+      <img src="trabajos/falling.jpg" alt="Falling — Gastón Fontenla" loading="lazy">
+      <div class="work-cover-info"><span class="wc-role">Producción y composición</span><span class="wc-title">Falling</span><span class="wc-artist">Gastón Fontenla</span></div>
+    </div>
+    <div class="work-cover">
+      <img src="trabajos/el-sol-en-la-noche.jpg" alt="El sol en la noche — Gastón Fontenla" loading="lazy">
+      <div class="work-cover-info"><span class="wc-role">Producción y composición</span><span class="wc-title">El sol en la noche</span><span class="wc-artist">Gastón Fontenla</span></div>
+    </div>
+    <div class="work-cover">
+      <img src="trabajos/bajo-la-lluvia.jpg" alt="Bajo la lluvia — Gastón Fontenla" loading="lazy">
+      <div class="work-cover-info"><span class="wc-role">Producción y composición</span><span class="wc-title">Bajo la lluvia</span><span class="wc-artist">Gastón Fontenla</span></div>
+    </div>
+    <div class="work-cover">
+      <img src="trabajos/el-mundo.jpg" alt="El mundo — Franco Natanael" loading="lazy">
+      <div class="work-cover-info"><span class="wc-role">Mezcla y mastering</span><span class="wc-title">El mundo</span><span class="wc-artist">Franco Natanael</span></div>
+    </div>
+    <div class="work-cover">
+      <img src="trabajos/desde-adentro.jpg" alt="Desde adentro — Luciano de la Rosa" loading="lazy">
+      <div class="work-cover-info"><span class="wc-role">Sesionista · Mandolina</span><span class="wc-title">Desde adentro</span><span class="wc-artist">Luciano de la Rosa</span></div>
+    </div>
+    <div class="work-cover">
+      <img src="trabajos/en-uno.jpg" alt="En uno — Franco Natanael" loading="lazy">
+      <div class="work-cover-info"><span class="wc-role">Sesionista · Bajo</span><span class="wc-title">En uno</span><span class="wc-artist">Franco Natanael</span></div>
+    </div>
+    <div class="work-cover">
+      <img src="trabajos/por-encima-del-abismo.jpg" alt="Por encima del abismo — Franco Natanael" loading="lazy">
+      <div class="work-cover-info"><span class="wc-role">Sesionista · Bajo</span><span class="wc-title">Por encima del abismo</span><span class="wc-artist">Franco Natanael</span></div>
+    </div>
+    <div class="work-cover">
+      <img src="trabajos/el-silencio-y-la-palabra.jpg" alt="El silencio y la palabra — Franco Natanael" loading="lazy">
+      <div class="work-cover-info"><span class="wc-role">Sesionista · Guitarra, bajo, sintes</span><span class="wc-title">El silencio y la palabra</span><span class="wc-artist">Franco Natanael</span></div>
+    </div>
+    <div class="work-cover">
+      <img src="trabajos/contemplativo.jpg" alt="Contemplativo — Laberintos Lejanos" loading="lazy">
+      <div class="work-cover-info"><span class="wc-role">Sesionista · Guitarra y mandolina</span><span class="wc-title">Contemplativo</span><span class="wc-artist">Laberintos Lejanos</span></div>
     </div>
   </div>
-  <p style="font-size: 11px; color: var(--faint); margin-top: 2rem; font-style: italic; letter-spacing: 0.02em;">Trabajos de estudio disponibles bajo consulta.</p>
+  <p class="works-note">Producción, composición, mezcla, mastering y sesiones de instrumento.</p>
 </section>
 
 <section id="contacto">
@@ -636,7 +673,7 @@
     cursor.style.left = e.clientX + 'px';
     cursor.style.top = e.clientY + 'px';
   });
-  document.querySelectorAll('a, button, .snode').forEach(el => {
+  document.querySelectorAll('a, button, .snode, .work-cover').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
   });
