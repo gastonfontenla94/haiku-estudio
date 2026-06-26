@@ -11,6 +11,9 @@
 <meta property="og:url" content="https://haikuestudio.com">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+<meta name="theme-color" content="#2B3D53">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
@@ -60,6 +63,13 @@
   @keyframes koi-spin {
     to { transform: rotate(360deg); }
   }
+  .koi path, .koi-eye { transition: fill 0.3s; }
+  .koi-a path { fill: var(--ink); }
+  .koi-b path { fill: var(--green); }
+  .koi-eye { fill: var(--bg); }
+  .cursor.on-dark .koi-a path { fill: #F2F1EE; }
+  .cursor.on-dark .koi-b path { fill: var(--green-light); }
+  .cursor.on-dark .koi-eye { fill: #2B3D53; }
 
   /* SCROLL PROGRESS */
   .scroll-progress {
@@ -168,13 +178,19 @@
   .hero-photo img {
     width: 100%; height: 100%;
     object-fit: cover; object-position: center top;
-    filter: grayscale(15%) contrast(1.05);
+    filter: grayscale(38%) contrast(1.06);
     display: block;
+  }
+  .hero-photo::before {
+    content: '';
+    position: absolute; inset: 0; z-index: 1;
+    background: var(--nav-bg); mix-blend-mode: soft-light; opacity: 0.55;
+    pointer-events: none;
   }
   .hero-photo::after {
     content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(to bottom, transparent 65%, rgba(242,241,238,0.25) 100%);
+    position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(to bottom, transparent 58%, rgba(242,241,238,0.28) 100%);
   }
 
   /* SECTIONS */
@@ -332,10 +348,22 @@
     font-style: italic; letter-spacing: 0.02em;
   }
 
+  /* Banda oscura full-width */
+  .band-dark { background: var(--nav-bg); }
+  .band-dark .section-label { color: rgba(242, 241, 238, 0.5); }
+  .band-dark .section-label::before { background: rgba(242, 241, 238, 0.3); }
+  .band-dark .works-note { color: rgba(242, 241, 238, 0.45); }
+
   /* SOBRE */
   #sobre { border-top: 0.5px solid var(--faint); border-bottom: 0.5px solid var(--faint); }
   .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-  .sobre-foto { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center top; filter: grayscale(15%) contrast(1.02); display: block; }
+  .sobre-figure { position: relative; }
+  .sobre-figure::before {
+    content: ''; position: absolute; inset: 0;
+    transform: translate(-18px, 18px);
+    border: 1px solid var(--green); opacity: 0.45; z-index: 0;
+  }
+  .sobre-foto { position: relative; z-index: 1; width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center top; filter: grayscale(12%) contrast(1.03); display: block; box-shadow: 0 22px 50px rgba(30, 37, 53, 0.18); }
   .sobre-content { padding-top: 0.5rem; }
   .sobre-content h2 { font-family: var(--serif); font-size: 34px; font-weight: 400; line-height: 1.2; color: var(--ink); margin-bottom: 2rem; letter-spacing: -0.01em; }
   .sobre-content h2 em { font-style: italic; color: var(--green); }
@@ -359,16 +387,36 @@
   .form-group label { display: block; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--faint); margin-bottom: 0.6rem; }
   .form-group input, .form-group textarea, .form-group select { width: 100%; background: transparent; border: none; border-bottom: 0.5px solid var(--faint); padding: 0.6rem 0; font-family: var(--sans); font-size: 14px; color: var(--ink); outline: none; transition: border-color 0.2s; -webkit-appearance: none; }
   .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-bottom-color: var(--green); }
+  .form-group:focus-within label { color: var(--green); }
   .form-group textarea { resize: none; height: 80px; }
-  .form-group select { cursor: pointer; color: var(--mid); }
+  .form-group select {
+    cursor: pointer; color: var(--mid); padding-right: 1.5rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 0.1rem center;
+  }
 
   .btn-submit { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--navy); color: var(--bg); border: none; padding: 0.9rem 2.5rem; font-family: var(--sans); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; cursor: none; transition: background 0.25s, gap 0.25s; margin-top: 0.5rem; }
   .btn-submit:hover { background: var(--green); gap: 1.25rem; }
   .btn-submit svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 1.5; }
 
-  footer { padding: 2rem 4rem; border-top: 0.5px solid var(--faint); display: flex; justify-content: space-between; align-items: center; }
-  footer span { font-size: 10px; color: var(--faint); letter-spacing: 0.08em; }
-  .footer-logo { width: 24px; height: 24px; object-fit: contain; opacity: 0.3; }
+  footer { background: var(--nav-bg); padding: 4.5rem 4rem 2.5rem; }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr; gap: 3rem;
+    padding-bottom: 3rem; border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+  }
+  .footer-brand-top { display: flex; align-items: center; gap: 12px; margin-bottom: 1.3rem; }
+  .footer-brand-top img { width: 56px; height: 56px; object-fit: contain; }
+  .footer-brand-name { font-family: var(--serif); font-size: 21px; color: var(--bg); letter-spacing: 0.02em; }
+  .footer-tagline { font-size: 12.5px; color: rgba(242, 241, 238, 0.5); line-height: 1.9; max-width: 290px; }
+  .footer-col h4 { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-light); margin-bottom: 1.3rem; }
+  .footer-col a, .footer-col span { display: block; font-size: 12.5px; color: rgba(242, 241, 238, 0.7); text-decoration: none; margin-bottom: 0.75rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--bg); }
+  .footer-bottom {
+    max-width: 1100px; margin: 0 auto; padding-top: 2rem;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  }
+  .footer-bottom span { font-size: 10px; color: rgba(242, 241, 238, 0.4); letter-spacing: 0.06em; }
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -396,9 +444,12 @@
     .service-m svg { width: 24px; height: 24px; stroke: var(--green); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
     .service-m-num { font-size: 9px; letter-spacing: 0.12em; color: var(--faint); }
     .service-m-name { font-family: var(--serif); font-size: 20px; color: var(--mid); }
-    .sobre-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .sobre-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .sobre-figure::before { transform: translate(-10px, 10px); }
     .contacto-inner { grid-template-columns: 1fr; gap: 3rem; }
-    footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    footer { padding: 3.5rem 1.5rem 2rem; }
+    .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
     .hero-meta { flex-wrap: wrap; gap: 1.5rem; }
     .nav-links { display: none; }
     .nav-links.open { display: flex; flex-direction: column; gap: 1.5rem; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--nav-bg); align-items: center; justify-content: center; z-index: 99; }
@@ -416,18 +467,16 @@
 <body>
 
 <div class="cursor" id="cursor">
-  <svg class="cursor-svg" viewBox="-22 -22 44 44" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
-    <!-- Pez 1: azul oscuro, arriba -->
-    <g transform="translate(0,-11)">
-      <ellipse cx="0" cy="0" rx="8" ry="5" fill="#1E2535"/>
-      <path d="M-8,0 L-13,4 L-13,-4 Z" fill="#1E2535"/>
-      <circle cx="3.5" cy="-1.5" r="1.3" fill="#F2F1EE"/>
+  <svg class="cursor-svg" viewBox="-20 -20 40 40" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+    <!-- Koi 1 -->
+    <g class="koi koi-a" transform="rotate(-30)">
+      <path d="M13,-6 C13,-12 6,-15 -1,-14 C-5,-13.5 -8,-11 -9,-8 L-15,-12.5 L-10.5,-8 L-15,-3.5 L-8,-5 C-4,-3 6,-2 13,-6 Z"/>
+      <circle class="koi-eye" cx="8" cy="-7.5" r="1.4"/>
     </g>
-    <!-- Pez 2: verde, abajo (espejado) -->
-    <g transform="translate(0,11) rotate(180)">
-      <ellipse cx="0" cy="0" rx="8" ry="5" fill="#5C7A52"/>
-      <path d="M-8,0 L-13,4 L-13,-4 Z" fill="#5C7A52"/>
-      <circle cx="3.5" cy="-1.5" r="1.3" fill="#F2F1EE"/>
+    <!-- Koi 2 (complementario) -->
+    <g class="koi koi-b" transform="rotate(150)">
+      <path d="M13,-6 C13,-12 6,-15 -1,-14 C-5,-13.5 -8,-11 -9,-8 L-15,-12.5 L-10.5,-8 L-15,-3.5 L-8,-5 C-4,-3 6,-2 13,-6 Z"/>
+      <circle class="koi-eye" cx="8" cy="-7.5" r="1.4"/>
     </g>
   </svg>
 </div>
@@ -607,7 +656,9 @@
 <section id="sobre">
   <div class="sobre-grid">
     <div class="reveal">
-      <img src="gaston-tocando.jpg" alt="Gastón Fontenla tocando el bajo" class="sobre-foto">
+      <figure class="sobre-figure">
+        <img src="gaston-tocando.jpg" alt="Gastón Fontenla tocando el bajo" class="sobre-foto">
+      </figure>
     </div>
     <div class="sobre-content reveal">
       <h2>Un estudio construido<br>desde la <em>escucha.</em></h2>
@@ -618,6 +669,7 @@
   </div>
 </section>
 
+<div class="band-dark">
 <section id="trabajos">
   <p class="section-label reveal">Trabajos · Discografía</p>
   <div class="works-grid reveal">
@@ -672,6 +724,7 @@
   </div>
   <p class="works-note">Producción, composición, mezcla, mastering y sesiones de instrumento.</p>
 </section>
+</div>
 
 <section id="contacto">
   <div class="contacto-inner">
@@ -705,12 +758,31 @@
 </section>
 
 <footer>
-  <span>Haiku Estudio · Buenos Aires</span>
-  <img src="logo.png" alt="" class="footer-logo" aria-hidden="true">
-  <span>© 2025</span>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-brand-top">
+        <img src="logo.png" alt="Haiku Estudio">
+        <span class="footer-brand-name">Haiku Estudio</span>
+      </div>
+      <p class="footer-tagline">Grabación, mezcla y mastering con criterio musical y rigor técnico. Buenos Aires, Argentina.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navegación</h4>
+      <a href="#servicios">Servicios</a>
+      <a href="#sobre">Estudio</a>
+      <a href="#trabajos">Trabajos</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© <span id="footerYear">2026</span> Haiku Estudio</span>
+    <span>Buenos Aires · Argentina</span>
+  </div>
 </footer>
 
 <script>
+  document.getElementById('footerYear').textContent = new Date().getFullYear();
+
   const navbar = document.getElementById('navbar');
   const progress = document.getElementById('scrollProgress');
 
@@ -750,6 +822,10 @@
   document.querySelectorAll('a, button, .snode, .work-cover').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+  document.querySelectorAll('.band-dark, footer').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('on-dark'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('on-dark'));
   });
 
   // Mandala de servicios
