@@ -216,10 +216,6 @@
     position: absolute; top: 0; left: 0;
     width: 100%; height: 100%; overflow: visible;
   }
-  .inner-ring-g {
-    transform-origin: 280px 280px;
-    animation: ring-spin 50s linear infinite;
-  }
   @keyframes ring-spin { to { transform: rotate(360deg); } }
   .arc-seg {
     fill: none; stroke: #5C7A52; stroke-width: 5;
@@ -233,7 +229,7 @@
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 140px; height: 90px;
+    width: 180px; height: 150px;
     pointer-events: none; z-index: 2;
   }
   .cc-idle {
@@ -241,7 +237,7 @@
     display: flex; align-items: center; justify-content: center;
     transition: opacity 0.4s;
   }
-  .cc-idle svg { width: 52px; height: 52px; }
+  .cc-idle svg { width: 98px; height: 98px; }
   .cc-vinyl-spin { transform-origin: 24px 24px; animation: ring-spin 14s linear infinite; }
   .circle-stage.hovered .cc-vinyl-spin { animation-play-state: paused; }
   .cc-active {
@@ -253,6 +249,8 @@
   }
   .circle-stage.hovered .cc-idle { opacity: 0; }
   .circle-stage.hovered .cc-active { opacity: 1; }
+  .circle-spokes { transition: opacity 0.4s; }
+  .circle-stage.hovered .circle-spokes { opacity: 0; }
   .cc-num {
     display: block; font-size: 9px; letter-spacing: 0.15em;
     text-transform: uppercase; color: var(--green); margin-bottom: 0.4rem;
@@ -545,13 +543,13 @@
 
   <div class="circle-stage reveal" id="circleStage">
     <svg class="circle-svg" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
-      <!-- Radios estructurales (efecto rueda) -->
-      <g stroke="#BFC4C9" stroke-width="0.75" opacity="0.32">
-        <line x1="280" y1="202" x2="280" y2="110"/>
-        <line x1="354.2" y1="255.9" x2="441.7" y2="227.5"/>
-        <line x1="325.9" y1="343.1" x2="379.9" y2="417.5"/>
-        <line x1="234.1" y1="343.1" x2="180.1" y2="417.5"/>
-        <line x1="209.6" y1="255.9" x2="118.3" y2="227.5"/>
+      <!-- Radios punteados hacia cada servicio -->
+      <g class="circle-spokes" stroke="#BFC4C9" stroke-width="1.4" opacity="0.4" stroke-linecap="round" stroke-dasharray="0.01 7">
+        <line x1="280" y1="206" x2="280" y2="108"/>
+        <line x1="357.4" y1="254.8" x2="450.6" y2="224.5"/>
+        <line x1="327.7" y1="346.8" x2="385.2" y2="426"/>
+        <line x1="232.3" y1="346.8" x2="174.8" y2="426"/>
+        <line x1="206.6" y1="254.8" x2="109.4" y2="224.5"/>
       </g>
       <!-- Anillo estructural sólido -->
       <circle cx="280" cy="280" r="200" fill="none" stroke="#BFC4C9" stroke-width="1.25" opacity="0.5"/>
@@ -561,17 +559,6 @@
       <path class="arc-seg" d="M 470 342 A 200 200 0 0 1 280 480"/>
       <path class="arc-seg" d="M 280 480 A 200 200 0 0 1 90 342"/>
       <path class="arc-seg" d="M 90 342 A 200 200 0 0 1 162 118"/>
-      <!-- Anillo interior giratorio -->
-      <g class="inner-ring-g">
-        <circle cx="280" cy="280" r="74" fill="none" stroke="#BFC4C9" stroke-width="0.75" opacity="0.6"/>
-        <circle cx="280" cy="206" r="2.2" fill="#5C7A52" opacity="0.6"/>
-        <circle cx="354" cy="280" r="2" fill="#BFC4C9" opacity="0.7"/>
-        <circle cx="280" cy="354" r="2" fill="#BFC4C9" opacity="0.7"/>
-        <circle cx="206" cy="280" r="2" fill="#BFC4C9" opacity="0.7"/>
-      </g>
-      <!-- Núcleo -->
-      <circle cx="280" cy="280" r="5" fill="none" stroke="#BFC4C9" stroke-width="1" opacity="0.6"/>
-      <circle cx="280" cy="280" r="2.5" fill="#5C7A52" opacity="0.5"/>
     </svg>
 
     <div class="circle-center">
