@@ -370,6 +370,17 @@
   .service-name { font-family: var(--serif); font-size: 22px; font-weight: 400; line-height: 1.2; color: var(--bg); }
   .service-desc { font-size: 14.5px; line-height: 1.75; color: rgba(242, 241, 238, 0.72); }
 
+  /* TRABAJOS — destacado con reproductor */
+  .works-player {
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 3rem; align-items: center;
+    padding: 2.25rem 0 3rem; margin-bottom: 3.5rem;
+    border-bottom: 0.5px solid rgba(242, 241, 238, 0.15);
+  }
+  .wp-label { display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-light); margin-bottom: 0.8rem; }
+  .wp-title { font-family: var(--serif); font-size: 30px; font-weight: 400; line-height: 1.15; color: var(--bg); margin-bottom: 0.7rem; }
+  .wp-desc { font-size: 14.5px; line-height: 1.75; color: rgba(242, 241, 238, 0.72); max-width: 360px; }
+  .works-player-frame { display: block; border: 0; border-radius: 12px; }
+
   /* TRABAJOS — grilla de discografía */
   .works-grid {
     display: grid;
@@ -513,10 +524,12 @@
   }
 
   @media (max-width: 900px) {
-    #hero { grid-template-columns: 1fr; }
-    .hero-photo { display: none; }
-    .hero-content { border-right: none; }
+    #hero { grid-template-columns: 1fr; min-height: 0; }
+    .hero-content { border-right: none; padding-bottom: 4.5rem; }
+    .hero-photo { height: 340px; }
+    .hero-photo img { object-position: center 22%; }
     .works-grid { grid-template-columns: repeat(3, 1fr); }
+    .works-player { grid-template-columns: 1fr; gap: 1.5rem; }
     .services-list { grid-template-columns: repeat(2, 1fr); }
   }
 
@@ -752,6 +765,17 @@
 <div class="band-dark">
 <section id="trabajos">
   <h2 class="section-label reveal">Trabajos · Discografía</h2>
+
+  <!-- Trabajo destacado con reproductor. Para cambiarlo: reemplazar el ID del álbum en el src del iframe y los textos. -->
+  <div class="works-player reveal">
+    <div class="works-player-text">
+      <span class="wp-label">Escuchá</span>
+      <h3 class="wp-title">Constelación</h3>
+      <p class="wp-desc">Producción y composición de Gastón Fontenla. Una muestra del criterio sonoro del estudio.</p>
+    </div>
+    <iframe class="works-player-frame" title="Reproductor de Spotify: Constelación" src="https://open.spotify.com/embed/album/0hgkLixX8mr0hlVaFAIrJl?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+
   <div class="works-grid reveal">
     <a class="work" href="https://open.spotify.com/album/0hgkLixX8mr0hlVaFAIrJl" target="_blank" rel="noopener">
       <div class="work-cover"><img src="trabajos/constelacion.jpg" alt="Tapa de Constelación, de Gastón Fontenla" loading="lazy" width="600" height="600"></div>
